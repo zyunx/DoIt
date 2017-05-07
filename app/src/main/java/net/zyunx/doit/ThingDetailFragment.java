@@ -60,9 +60,13 @@ public class ThingDetailFragment extends Fragment {
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.getTitle());
+                appBarLayout.setTitle(isBlank(mItem.getTitle()) ? "No Title" : mItem.getTitle());
             }
         }
+    }
+
+    private boolean isBlank(String s) {
+        return s == null || s.trim().length() == 0;
     }
 
     @Override
