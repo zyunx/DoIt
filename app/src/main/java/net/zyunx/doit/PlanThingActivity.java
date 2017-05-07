@@ -18,6 +18,7 @@ import net.zyunx.doit.model.DoItDbHelper;
 import net.zyunx.doit.model.DoItService;
 
 public class PlanThingActivity extends AppCompatActivity {
+    public static final int REQUEST_PLAN = 1;
 
     private EditText contentText;
 
@@ -57,13 +58,18 @@ public class PlanThingActivity extends AppCompatActivity {
             if (null != content && !"".equals(content)) {
                 Log.d("Plan", content);
                 DoItService.getInstance(new DoItDbHelper(this)).addThing(content);
-                MyThingRecyclerViewAdapter.getAdapter(DoItContract.Thing.STATUS_TODO).notifyItemInserted(0);
+                setResult(RESULT_OK);
+            } else {
+                setResult(RESULT_CANCELED);
             }
-            navigateUpTo(new Intent(this, MainActivity.class));
+
+            finish();
+            //navigateUpTo(new Intent(this, MainActivity.class));
             return true;
         }
         if (id == R.id.action_delete) {
-            navigateUpToFromChild(this, new Intent(this, MainActivity.class));
+            finish();
+            //navigateUpTo(new Intent(this, MainActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -25,6 +25,8 @@ import net.zyunx.doit.model.DoItService;
  */
 public class ThingDetailActivity extends AppCompatActivity {
 
+    private static final int REQUEST_EDIT = 1;
+
     private int thingId;
     private int thingStatus;
     private int thingPosition;
@@ -51,7 +53,7 @@ public class ThingDetailActivity extends AppCompatActivity {
                 intent.putExtra(ThingDetailFragment.ARG_ITEM_ID, thingId);
                 intent.putExtra(ThingDetailFragment.ARG_ITEM_STATUS, thingStatus);
                 intent.putExtra(ThingDetailFragment.ARG_ITEM_POSITION, thingPosition);
-                startActivityForResult(intent, 0);
+                startActivityForResult(intent, REQUEST_EDIT);
             }
         });
 
@@ -85,6 +87,21 @@ public class ThingDetailActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQUEST_EDIT:
+                ThingDetailFragment fragment  = (ThingDetailFragment) getSupportFragmentManager().getFragments().get(0);
+                fragment.update();
+                MyThingRecyclerViewAdapter.getAdapter(thingStatus).notifyItemRemoved(thingPosition);
+                MyThingRecyclerViewAdapter.getAdapter(thingStatus).notifyItemInserted(0);
+                break;
+            default:
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
@@ -94,21 +111,12 @@ public class ThingDetailActivity extends AppCompatActivity {
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            //finish();
-            navigateUpToFromChild(this, new Intent(this, MainActivity.class));
-            //navigateUpTo();
+            finish();
+            //Intent intent = new Intent(this, MainActivity.class);
+            //navigateUpTo(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    protected void update(String content) {
-        Log.d("onActivityResult", content);
-        ThingDetailFragment fragment  = (ThingDetailFragment) getSupportFragmentManager().getFragments().get(0);
-        TextView contentText = (TextView) fragment.getView().findViewById(R.id.thing_detail);
-        contentText.setText(content);
-
-        MyThingRecyclerViewAdapter.getAdapter(thingStatus).notifyItemRemoved(thingPosition);
-        MyThingRecyclerViewAdapter.getAdapter(thingStatus).notifyItemInserted(0);
-    }
 }

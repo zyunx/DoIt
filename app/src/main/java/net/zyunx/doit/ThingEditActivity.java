@@ -11,7 +11,6 @@ import net.zyunx.doit.model.DoItDbHelper;
 import net.zyunx.doit.model.DoItService;
 
 public class ThingEditActivity extends AppCompatActivity {
-
     private int thingId;
     private int thingStatus;
     private int thingPosition;
@@ -50,13 +49,10 @@ public class ThingEditActivity extends AppCompatActivity {
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            //navigateUpToFromChild(this, new Intent(this, MainActivity.class));
             String content = contentText.getText().toString();
             DoItService.getInstance(dbHelper).updateThing(thingId, content);
-            Intent intent = new Intent(this, ThingDetailActivity.class);
-            intent.putExtra("content", content);
-            intent.putExtra(ThingDetailFragment.ARG_ITEM_ID, thingId);
-            navigateUpToFromChild(this, intent);
+            setResult(RESULT_OK, null);
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

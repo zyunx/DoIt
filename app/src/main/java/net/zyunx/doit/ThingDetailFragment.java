@@ -34,6 +34,8 @@ public class ThingDetailFragment extends Fragment {
     private Thing mItem;
 
     private DoItDbHelper dbHelper;
+
+    private TextView contentText;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -67,12 +69,29 @@ public class ThingDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.thing_detail, container, false);
-
+        contentText = (TextView) rootView.findViewById(R.id.thing_detail);
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.thing_detail)).setText(mItem.getContent());
+            contentText.setText(mItem.getContent());
         }
 
         return rootView;
+    }
+
+
+    public void update() {
+        Log.d(ThingDetailFragment.class.getName(), "ITEM_ID: " + getArguments().getInt(ARG_ITEM_ID));
+        dbHelper = new DoItDbHelper(getContext());
+        mItem = DoItService.getInstance(dbHelper).getThingById(getArguments().getInt(ARG_ITEM_ID));
+
+        if (mItem == null)
+            return;
+
+        Activity activity = this.getActivity();
+        CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
+        if (appBarLayout != null) {
+            appBarLayout.setTitle(mItem.getTitle());
+        }
+        contentText.setText(mItem.getContent());
     }
 }

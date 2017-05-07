@@ -24,13 +24,12 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ThingEditActivity"
-            android:label="Plan somthing">
+            android:label="@string/title_activity_edit_thing">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.zyunx.doit.ThingDetailActivity" />
@@ -41,5 +40,4 @@
             android:parentActivityName=".ThingDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
-
 </manifest>
