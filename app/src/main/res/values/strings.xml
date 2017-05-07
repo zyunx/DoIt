@@ -4,5 +4,10 @@
     <string name="title_activity_main">DOIT</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_plan_thing">PLAN SOMETHING</string>
+    <string name="title_activity_plan_thing">What to do?</string>
+    <string name="hint_activity_plan_thing">What do you want to do, now?</string>
+    <string name="title_activity_edit_thing">Write a memo</string>
+    <string name="todo">TODO</string>
+    <string name="doing">DOING</string>
+    <string name="done">DONE</string>
 </resources>

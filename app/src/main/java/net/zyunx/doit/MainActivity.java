@@ -72,9 +72,11 @@ public class MainActivity extends AppCompatActivity
             }
         });
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setCurrentItem(SectionsPagerAdapter.DOING_POSITION, false);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -193,6 +195,10 @@ public class MainActivity extends AppCompatActivity
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        public static final int TODO_POSITION = 0;
+        public static final int DOING_POSITION = 1;
+        public static final int DONE_POSITION = 2;
+        public static final int TAB_COUNT = 3;
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -200,29 +206,40 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            //return PlaceholderFragment.newInstance(position + 1);
-            return ThingFragment.newInstance(DoItContract.Thing.STATUS_TODO + position);
+            ThingFragment fragment = null;
+            switch (position) {
+                case TODO_POSITION:
+                    fragment = ThingFragment.newInstance(DoItContract.Thing.STATUS_TODO);
+                    break;
+                case DOING_POSITION:
+                    fragment = ThingFragment.newInstance(DoItContract.Thing.STATUS_DOING);
+                    break;
+                case DONE_POSITION:
+                    fragment = ThingFragment.newInstance(DoItContract.Thing.STATUS_DONE);
+                    break;
+                default:
+                    fragment = null;
+            }
+            return fragment;
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return TAB_COUNT;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-                case 0:
-                    return "To do";
-                case 1:
-                    return "Doing";
-                case 2:
-                    return "Done";
+                case TODO_POSITION:
+                    return getString(R.string.todo);
+                case DOING_POSITION:
+                    return getString(R.string.doing);
+                case DONE_POSITION:
+                    return getString(R.string.done);
+                default:
+                    return null;
             }
-            return null;
         }
     }
 }

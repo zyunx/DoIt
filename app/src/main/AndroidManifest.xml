@@ -37,7 +37,7 @@
             </activity>
         <activity
             android:name=".PlanThingActivity"
-            android:label="Write a memo"
+            android:label="@string/title_activity_plan_thing"
             android:parentActivityName=".ThingDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

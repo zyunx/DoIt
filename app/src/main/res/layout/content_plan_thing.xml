@@ -19,5 +19,6 @@
         android:inputType="textMultiLine"
         android:gravity="top"
         android:ems="10"
-        android:id="@+id/contentText" />
+        android:id="@+id/contentText"
+        android:hint="@string/hint_activity_plan_thing"/>
 </RelativeLayout>
