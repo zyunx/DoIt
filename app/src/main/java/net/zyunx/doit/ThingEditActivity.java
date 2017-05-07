@@ -39,6 +39,19 @@ public class ThingEditActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+
+    private void saveAndFinish() {
+        String content = contentText.getText().toString();
+        DoItService.getInstance(dbHelper).updateThing(thingId, content);
+        setResult(RESULT_OK, null);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        saveAndFinish();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -49,10 +62,7 @@ public class ThingEditActivity extends AppCompatActivity {
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            String content = contentText.getText().toString();
-            DoItService.getInstance(dbHelper).updateThing(thingId, content);
-            setResult(RESULT_OK, null);
-            finish();
+            saveAndFinish();
             return true;
         }
         return super.onOptionsItemSelected(item);

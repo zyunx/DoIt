@@ -16,5 +16,6 @@
         android:inputType="textMultiLine"
         android:ems="10"
         android:gravity="top"
+        android:background="@null"
         android:id="@+id/contentText" />
 </RelativeLayout>

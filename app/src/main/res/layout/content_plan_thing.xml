@@ -20,5 +20,6 @@
         android:gravity="top"
         android:ems="10"
         android:id="@+id/contentText"
+        android:background="@null"
         android:hint="@string/hint_activity_plan_thing"/>
 </RelativeLayout>

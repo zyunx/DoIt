@@ -43,6 +43,24 @@ public class PlanThingActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_plan_thing, menu);
         return true;
     }
+
+    private void saveAndFinish() {
+        String content = contentText.getText().toString();
+        if (null != content && !"".equals(content)) {
+            Log.d("Plan", content);
+            DoItService.getInstance(new DoItDbHelper(this)).addThing(content);
+            setResult(RESULT_OK);
+        } else {
+            setResult(RESULT_CANCELED);
+        }
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        saveAndFinish();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -53,18 +71,7 @@ public class PlanThingActivity extends AppCompatActivity {
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            //navigateUpToFromChild(this, new Intent(this, MainActivity.class));
-            String content = contentText.getText().toString();
-            if (null != content && !"".equals(content)) {
-                Log.d("Plan", content);
-                DoItService.getInstance(new DoItDbHelper(this)).addThing(content);
-                setResult(RESULT_OK);
-            } else {
-                setResult(RESULT_CANCELED);
-            }
-
-            finish();
-            //navigateUpTo(new Intent(this, MainActivity.class));
+            saveAndFinish();
             return true;
         }
         if (id == R.id.action_delete) {
